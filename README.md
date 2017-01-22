@@ -1,1 +1,3 @@
-# pythonistaRepo # Just a repo for small snippets I met or build
+### A repo for Treehouse assessments from challanges and quizzes
+## 
+#
