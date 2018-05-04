@@ -26,21 +26,15 @@
 */
 
 
+const router = require('./router.js')
+
+
 // 1.
 const http = require('http'), server = '127.0.0.1', port = 1337;
 
 http.createServer(function (request, response) {
-  homeRoute(request, response)
+  router.home(request, response);
+  router.user(request, response);
 }).listen(port, server);
-
-function homeRoute(request, response) {
-  if (request.url === "/") {
-    response.writeHead(200, {'Content-type': 'text/plain'});
-    response.write('Header: \n');
-    response.write('Search: \n');
-    response.write('Footer: \n');    
-    response.end('')
-  }
-}
 
 console.log('Server runnig at http://' +server+ ':' +port)
