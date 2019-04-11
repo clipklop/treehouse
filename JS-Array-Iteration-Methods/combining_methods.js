@@ -198,4 +198,50 @@ const objectUsers = [
 // Result: ['The Iliad', 'The Brothers Karamazov', 'Tenth of December', 'Cloud Atlas', 'One Hundred Years of Solitude', 'Candide'];
 const books = objectUsers.map(user => user.favoriteBooks.map(book => book.title))
   .reduce((acc, cur) => [...acc, ...cur], [])
-console.log(books)
+
+
+// 13. Sum up all the elements of the fucntions.
+const sum = (...args) => [...args].reduce((a, b) => a + b, 0);
+
+
+// 14. 
+const customerNames = [
+  ["John", "Sandy", "Tyrone", "Elizabeth", "Penny"],
+  ["Barry", "Wanda", "Jamal", "Hayden"],
+  ["Portia", "Pam", "Philip"]
+];
+let flattenedCustomerNames;
+// flattenedCustomerNames should be: ["John", "Sandy", "Tyrone", "Elizabeth", "Penny", "Barry", "Wanda", "Jamal", "Hayden", "Portia", "Pam", "Philip"]
+// Write your code below
+flattenedCustomerNames = customerNames.reduce((acc, cur) => acc.concat(cur))
+
+
+// 15. 
+const customersHobbies = [
+  {
+    name: "Tyrone",
+    personal: {
+      age: 33,
+      hobbies: ["Bicycling", "Camping"]
+    }
+  },
+  {
+    name: "Elizabeth",
+    personal: {
+      age: 25,
+      hobbies: ["Guitar", "Reading", "Gardening"]
+    }
+  },
+  {
+    name: "Penny",
+    personal: {
+      age: 36,
+      hobbies: ["Comics", "Chess", "Legos"]
+    }
+  }
+];
+let hobbies;
+// hobbies should be: ["Bicycling", "Camping", "Guitar", "Reading", "Gardening", "Comics", "Chess", "Legos"]
+// Write your code below
+hobbies = customersHobbies.reduce((acc, cur) => [...acc, ...cur.personal.hobbies], []);
+console.log(hobbies)
