@@ -129,7 +129,7 @@ def main():
     project_slug = slugify(project_name)
 
     create_dirs(project_root, project_slug)
-    create_files(project_root,project_slug, project_name)
+    create_files(project_root, project_slug, project_name)
 
     print("Creating '{}' project in {}".format(project_name, project_root))
 
