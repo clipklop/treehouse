@@ -11,6 +11,15 @@ import os
 import re
 
 
+FILES = {
+    '{project_slug}/requirments.txt': 'requirments.txt.template',
+    '{project_slug}/app.py': 'app.py.template',
+    '{project_slug}/static/css/{project_slug}.css': 'project.css.template',
+    '{project_slug}/static/js/{project_slug}.js': 'project.js.template',
+    '{project_slug}/templates/index.html': 'index.html.template'
+}
+
+
 DIRS = [
     '{project_slug}/',
     '{project_slug}/static/',
@@ -19,6 +28,22 @@ DIRS = [
     '{project_slug}/static/css/',
     '{project_slug}/templates/',
 ]
+
+
+def flask_template_prepare(string):
+    string = re.sub(r'\{\%', '<%', string)
+    string = re.sub(r'\%\}', '%>', string)
+    string = re.sub(r'\{\{', '<<', string)
+    string = re.sub(r'\}\}', '>>', string)
+    return string
+
+
+def flask_template_repair(string):
+    string = re.sub(r'\<\%', '{%', string)
+    string = re.sub(r'\%\>', '%}', string)
+    string = re.sub(r'\<\<', '{{', string)
+    string = re.sub(r'\>\>', '}}', string)
+    return string
 
 
 def slugify(string):
@@ -42,7 +67,8 @@ def check_del_root(root):
     if os.path.exists(root):
         print('Path already exists.')
         try:
-            delete = strtobool(input('Delete existing files/directories? [y/n]'))
+            delete = strtobool(input(
+                'Delete existing files/directories? [y/n]'))
         except ValueError:
             return check_del_root(root)
         else:
@@ -50,7 +76,8 @@ def check_del_root(root):
                 try:
                     os.removedirs(root)
                 except OSError:
-                    print("Couldn't remove {}. Please delete it yourself.".format(root))
+                    print("Couldn't remove {}. Please delete it yourself. \
+                    ".format(root))
                 else:
                     print('Deleted {}'.format(root))
 
@@ -69,6 +96,27 @@ def create_dirs(root, slug):
                 pass
 
 
+def create_files(root, slug, name):
+    for file_name, template_name in FILES.items():
+        try:
+            template_file = open(os.path.join('templates', template_name))
+            file_content = template_file.read()
+            file_content = flask_template_prepare(file_content)
+            file_content = file_content.format(
+                project_name=name, project_slug=slug)
+            file_content = flask_template_repair(file_content)
+
+            target_file = open(os.path.join(root, file_name.format(
+                project_slug=slug)), 'w')
+            target_file.write(file_content)
+        except OSError:
+            print("Couldn't create {}".format(file_name.format(
+                project_slug=slug)))
+        finally:
+            template_file.close()
+            target_file.close()
+
+
 def main():
     """Entrypoint"""
     project_root = get_root()
@@ -79,7 +127,9 @@ def main():
         project_name = input("What's the full name for the project? ").strip()
         # project_author = input("Who will be author of a project? ").strip()
     project_slug = slugify(project_name)
+
     create_dirs(project_root, project_slug)
+    create_files(project_root,project_slug, project_name)
 
     print("Creating '{}' project in {}".format(project_name, project_root))
 
