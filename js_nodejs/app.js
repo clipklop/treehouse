@@ -37,4 +37,4 @@ http.createServer(function (request, response) {
   router.user(request, response);
 }).listen(port, server);
 
-console.log('Server runnig at http://' +server+ ':' +port)
+console.log(`Server runnig at http://${server}:${port}`)
