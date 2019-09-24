@@ -1,10 +1,10 @@
 #
 
 
-from peewee import *
+import peewee as pw
 
 
-DB = SqliteDatabase('students.db')
+DB = pw.SqliteDatabase('students.db')
 
 STUDENTS = [
     {'username': 'mischa',
@@ -20,9 +20,9 @@ STUDENTS = [
 ]
 
 
-class Student(Model):
-    username = CharField(max_length=255, unique=True)
-    points = IntegerField(default=0)
+class Student(pw.Model):
+    username = pw.CharField(max_length=255, unique=True)
+    points = pw.IntegerField(default=0)
 
     class Meta:
         database = DB
@@ -31,8 +31,9 @@ class Student(Model):
 def add_student(students):
     for student in students:
         try:
-            Student.create(username=student['username'], points=student['points'])
-        except IntegrityError:
+            Student.create(
+                username=student['username'], points=student['points'])
+        except pw.IntegrityError:
             student_record = Student.get(username=student['username'])
             student_record.points = student['points']
             student_record.save()
@@ -47,4 +48,5 @@ if __name__ == '__main__':
     DB.connect()
     DB.create_tables([Student], safe=True)
     add_student(STUDENTS)
-    print("Our top student right now is: '{0.username}'!".format(top_student()))
+    print("Our top student right now is: '{0.username}'!".format(
+        top_student()))
