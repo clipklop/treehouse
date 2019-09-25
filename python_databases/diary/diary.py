@@ -4,6 +4,7 @@
 """
 
 
+from collections import OrderedDict
 import peewee as pw
 import datetime
 
@@ -27,7 +28,16 @@ def initialize():
 
 def show_menu():
     """Shows users menu."""
-    pass
+    choice = None
+
+    while choice != 'q':
+        print("Enter 'q' to quit.")
+        for key, value in menu.items():
+            print('{}) {}'.format(key, value.__doc__))
+        choice = input('Action: ').lower().strip()
+
+        if choice in menu:
+            menu[choice]()
 
 
 def add_entry():
@@ -43,6 +53,12 @@ def view_entries():
 def delete_entry(entry):
     """Delete an entry."""
     pass
+
+
+menu = OrderedDict([
+    ('a', add_entry),
+    ('v', view_entries),
+])
 
 
 if __name__ == '__main__':
