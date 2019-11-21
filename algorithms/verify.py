@@ -4,7 +4,8 @@
 
 
 ARRAY = list(range(1, 99))
-ARRAY[-1], ARRAY[-2] = ARRAY[-2], ARRAY[-1]
+#ARRAY[-1], ARRAY[-2] = ARRAY[-2], ARRAY[-1]
+
 
 def verify(index=None):
     if index is not None:

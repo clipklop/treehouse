@@ -14,7 +14,7 @@ def binary_search(lst, target):
     first = 0
     last = len(lst) - 1
 
-    while first <= last:
+    while first <= last: # subtle logic here - this check is also makes sure that array is not empty, coz 'first' would be always greater than 'last'
         midpoint = (first + last) // 2
 
         if lst[midpoint] == target:
