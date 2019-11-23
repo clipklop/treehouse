@@ -4,10 +4,11 @@
 
 import random
 import sys
+import os
 
-from load import load_numbers
+from helper.load import load_numbers
 
-
+print(sys.argv)
 numbers = load_numbers(sys.argv[1])
 
 
@@ -26,4 +27,5 @@ def bogo_sort(values):
     return f'It took you {attempts} attempts to sort this {values} list'
 
 
-print(bogo_sort(numbers))
+if __name__ == "__main__":
+    print(bogo_sort(numbers))

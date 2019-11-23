@@ -2,7 +2,7 @@
     * Algorithms: Binary Search
 """
 
-from verify import verify, ARRAY
+from helper.verify import verify, ARRAY
 
 
 def binary_search(lst, target):
