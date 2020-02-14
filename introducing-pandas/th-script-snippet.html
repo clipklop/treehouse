@@ -1,0 +1,9 @@
+<script type="text/javascript">
+    // In order to override default notebook styles we need a specific class on our markdown area
+    document.querySelectorAll('.markdown-zone').forEach(el => {
+        el.classList.add('markdown--jupyter-notebook');
+        // And I want all child links to open a new tab
+        el.querySelectorAll('a').forEach(a => a.setAttribute('target', '_blank'));
+    });
+</script>
+
