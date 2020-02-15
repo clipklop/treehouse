@@ -30,11 +30,20 @@ def get_locations():
 
 def move_player(player, move):
     # get the player's location
+    x, y = player
     # if move == LEFT, x - 1
+    if move == "LEFT":
+        x -= 1
     # if move == RIGHT, x + 1
+    if move == "RIGHT":
+        x += 1
     # if move == UP, y - 1
+    if move == "UP":
+        y -= 1
     # if move == DOWN, y + 1
-    return player
+    if move == "DOWN":
+        y += 1
+    return x, y
 
 def get_moves(player):
     moves = ["LEFT", "RIGHT", "UP", "DOWN"]
@@ -57,26 +66,63 @@ def get_moves(player):
         moves.remove("RIGHT")
     return moves
 
-monster, door, player = get_locations()
+def draw_map(player):
+    print(" _" * 5)
+    tile = "|{}"
 
-while True:
-    valid_moves = get_moves(player)
-    print("Welcome to the dungeon!")
-    print("You're currently in room {}".format(player)) # fill with player's position
-    print("You can move {}".format(", ".join(valid_moves))) # fill with available moves
-    print("Enter Q to quit")
+    for cell in CELLS:
+        x, y = cell
+        if x < 4:
+            line_end = ""
+            if cell == player:
+                output = tile.format("X")
+            else:
+                output = tile.format("_")
+        else:
+            line_end = "\n"
+            if cell == player:
+                output = tile.format("X|")
+            else:
+                output = tile.format("_|")
+        print(output, end=line_end)
 
-    move = input("> ").upper()
-    if move == 'Q':
-        break
-    if move in valid_moves:
-        player = move_player(player, move)
-    else:
-        print("\n ** Wals are hard! Don't run into them! ** \n")
-        continue
+def game_loop():
+    monster, door, player = get_locations()
 
-    # Good move? Change the player position
-    # Bad move? Don't chnage anything!
-    # On the door? They win!
-    # On the monster? They lose!
-    # Otherwise, loop back around
+    while True:
+        draw_map(player)
+        valid_moves = get_moves(player)
+        print("You're currently in room {}".format(player)) # fill with player's position
+        print("You can move {}".format(", ".join(valid_moves))) # fill with available moves
+        print("Enter Q to quit")
+
+        move = input("> ")
+        move = move.upper()
+
+        if move == 'q':
+            break
+
+        if move in valid_moves:
+            # Good move? Change the player position
+            player = move_player(player, move)
+
+            if player == monster:
+                print("\n ** Oh no! The monster got you! Better luck next time! **\n")
+                break
+            if player == door:
+                print("\n ** You escaped! Congratulations! **\n")
+                break
+        else:
+            # Bad move? Don't chnage anything!
+            input("\n ** Wals are hard! Don't run into them! ** \n")
+        clear_screen()
+
+        # On the door? They win!
+        # On the monster? They lose!
+        # Otherwise, loop back around
+
+clear_screen()
+print("Welcome to the dungeon!")
+input("Press Enter to start the game")
+clear_screen()
+game_loop()

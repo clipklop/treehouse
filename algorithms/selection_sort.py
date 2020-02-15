@@ -29,11 +29,11 @@ def my_selection_sort(values):
 
 def selection_sort(values):
     sorted_list = []
-    print("%-25s %-25s" % (values, sorted_list))
+    # print("%-25s %-25s" % (values, sorted_list))
     for i in range(len(values)):
         i_to_move = min_index(values)
         sorted_list.append(values.pop(i_to_move))
-        print("%-25s %-25s" % (values, sorted_list))
+        # print("%-25s %-25s" % (values, sorted_list))
     return sorted_list
 
 

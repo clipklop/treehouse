@@ -1,25 +1,25 @@
-#
-
-
+"""
+    * A Hand class
+"""
 from dice import D6
+from scoresheets import YatzyScoresheet
 
 
 class Hand(list):
     def __init__(self, size=0, die_class=None, *args, **kwargs):
         if not die_class:
-            raise ValueError("You must provide a die class.")
+            raise ValueError('You must provide a die class')
         super().__init__()
 
         for _ in range(size):
             self.append(die_class())
-        
         self.sort()
 
     def _by_value(self, value):
         dice = []
         for die in self:
             if die == value:
-                dice.append(dice)
+                dice.append(die)
         return dice
 
 
@@ -49,8 +49,8 @@ class YatzyHand(Hand):
 
     @property
     def sixes(self):
-        return self._by_value(1)
-    
+        return self._by_value(6)
+
     @property
     def _sets(self):
         return {
@@ -63,6 +63,10 @@ class YatzyHand(Hand):
         }
 
 
-# hand = YatzyHand()
-# print(hand)
-# print(max(hand))
+yhand = YatzyHand()
+three = D6(value=3)
+four = D6(value=4)
+one = D6(value=1)
+yhand[:] = [one, three, three, four, four]
+x = YatzyScoresheet().score_one_pair(yhand)
+print(x)

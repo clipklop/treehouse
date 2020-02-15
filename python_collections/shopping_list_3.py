@@ -48,16 +48,15 @@ def add_to_list(item):
         shopping_list.append(item)
 
     show_list()
-    
+
 
 def show_list():
     """ Print out the list. """
     clear_screen()
     print("Here is your list: ")
-    index = 1
-    for item in shopping_list:
+
+    for index, item in enumerate(shopping_list, start = 1):
         print("{}. {}".format(index, item))
-        index += 1
 
     print("-" * 10)
 
@@ -79,8 +78,8 @@ while True:
     new_item = input("> ")
 
     # be able to quit the app
-    if new_item.upper() == 'DONE' or new_item.upper == "QUIT":
-        break        
+    if new_item.upper() == 'DONE' or new_item.upper() == "QUIT":
+        break
     elif new_item.upper() == 'HELP':
         show_help()
         continue

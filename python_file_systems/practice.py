@@ -58,7 +58,7 @@ def cleanup1(path):
         # concatenate new string as date with a dash plus username plus extension
         # username is found by slicing name up to index of dash (start of date)
         new_str = str(formatted_date) + "-" + str(name[:name.index('-')]) + ext
-        # rename files, make sure to join path with file name 
+        # rename files, make sure to join path with file name
         # os.rename(os.path.join(path, name), os.path.join(path, new_str)) 
         print(os.path.join(path, name), os.path.join(path, new_str)) 
 
@@ -94,4 +94,3 @@ print(slugify('1as-sd', '/home/clipklop/Templates/kenguroo'))
 # print(slugify('as-s1d_'))
 # print(slugify('as-sd_'))
 # print(slugify('  as-sd_', '/home/clipklop/Templates/kenguroo'))
-
