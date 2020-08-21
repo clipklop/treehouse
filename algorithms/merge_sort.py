@@ -1,6 +1,6 @@
-# *
-# ** Merge sort implementation
-# *
+"""
+    * Merge sort implementation
+"""
 
 def merge_sort(lst):
     """
