@@ -2,6 +2,14 @@
     * Merge sort implementation
 """
 
+import sys
+
+from helper.load import load_numbers
+
+
+numbers = load_numbers(sys.argv[1])
+
+
 def merge_sort(lst):
     """
     Sorts a list in ascending order
@@ -36,6 +44,34 @@ def merge_sort(lst):
     return l
 
 
+def my_merge_sort(values):
+    """My implementation of Merge sort."""
+    if len(values) <= 1:
+        return values
+
+    middle_idx = len(values) // 2
+    left_values = my_merge_sort(values[:middle_idx])
+    right_values = my_merge_sort(values[middle_idx:])
+    print("%15s %-15s" % (left_values, right_values))
+
+    sorted_values = []
+    left_idx, right_idx = 0, 0
+
+    while left_idx < len(left_values) and right_idx < len(right_values):
+        if left_values[left_idx] < right_values[right_idx]:
+            sorted_values.append(left_values[left_idx])
+            left_idx += 1
+        else:
+            sorted_values.append(right_values[right_idx])
+            right_idx += 1    
+
+    # if something is still remaining unsorted, just add it to sorted list
+    sorted_values += left_values[left_idx:]
+    sorted_values += right_values[right_idx:]
+
+    return sorted_values
+
+
 def verify_sorted(lst):
     n = len(lst)
 
@@ -47,5 +83,13 @@ def verify_sorted(lst):
 
 test = [54,62,93,17,77,31,44,55,20]
 print(merge_sort(test))
-print(verify_sorted(merge_sort(test)))
 print(verify_sorted(test))
+print(verify_sorted(merge_sort(test)))
+
+print(numbers)
+print(merge_sort(numbers))
+print(my_merge_sort(numbers))
+
+print(verify_sorted(numbers))
+print(verify_sorted(my_merge_sort(numbers)))
+
